@@ -5,8 +5,8 @@ class TaskManager:
         self._Btree = BTree(t=3)
         self.interval = intervalTree()
 
-    def add_task(self, id, start, end, val, name):
-        new_task = Task(id, start, end, val, name)
+    def add_task(self, id, start, end, val):
+        new_task = Task(id, start, end, val)
         self._Btree.insert(new_task)
         self.interval.add(new_task)
 
