@@ -18,6 +18,7 @@ class TaskManager:
 
     def remove_task(self, task_id):
         self._Btree.delete(task_id)
+        self.interval.delete(self.get_task_id(task_id)) #check for time complicity
 
     def display_all(self):
         print("\n--- ⁂ Current Task Hierarchy (B-Tree) ⁂ ---")
