@@ -11,7 +11,7 @@ def start(controller: Controller) -> None:
             break
 
         tokens: list = command.split()
-        cmd: str = tokens[0].upper()
+        cmd: str = tokens[0]
         args: list = tokens[1:]
 
         controller.dispatch(cmd, args)
