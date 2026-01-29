@@ -11,6 +11,7 @@ class Controller:
         }
 
     def add_task(self, args : list):
+        
         if len(args) != 4 :
             print(">>> [ERROR]:  Invalid arguments for InsertTask.")
             return
