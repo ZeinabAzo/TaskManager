@@ -1,4 +1,4 @@
-from src.core.models import Task
+from src.core.task import Task
 
 class Controller:
     def __init__(self, manager):

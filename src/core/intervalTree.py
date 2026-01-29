@@ -1,4 +1,4 @@
-from models import Task
+from .task import Task
 from typing import Optional, List
 
 # Assuming Task is already defined in core.py
@@ -131,18 +131,3 @@ class IntervalTree:
         if node.right and node.right.max > node.max:
             node.max = node.right.max
 
-    # ==========================
-    # UPDATE
-    # ==========================
-    def update(self, old_task: Task, new_task: Task):
-        """Updates a task. Structural changes require Delete + Add."""
-        # 1. If start or end time changed, the tree structure is invalid.
-        # We must delete the old one and re-insert the new one.
-        if old_task.start_time != new_task.start_time or old_task.end_time != new_task.end_time:
-            self.delete(old_task)
-            self.add(new_task)
-        else:
-            # 2. If only value/name changed, we just need to find the node and update data.
-            # (Simplest way is still search -> modify, or just re-insert to be safe)
-            self.delete(old_task)
-            self.add(new_task)

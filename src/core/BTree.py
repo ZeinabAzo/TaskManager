@@ -1,4 +1,4 @@
-from models import Task
+from .task import Task
 from typing import List, Optional
 
 class BTreeNode:

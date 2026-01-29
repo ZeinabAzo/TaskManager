@@ -1,10 +1,11 @@
-from .core import BTree, intervalTree
-from .core.models import Task
+from .core.BTree import BTree
+from .core.intervalTree import IntervalTree
+from .core.task import Task
 
 class TaskManager:
     def __init__(self):
-        self._Btree = BTree(t=3)
-        self.interval = intervalTree()
+        self._Btree = BTree()
+        self.interval = IntervalTree()
 
     def add_task(self, id, start, end, val):
 
