@@ -53,9 +53,24 @@ class Controller:
             print(">>> [ERROR]: Invalid arguments for InsertTask.(Arguments are not integer)")
             return
         
+        if self.manager.search_overlaps(id, start_time, end_time):
+            print("Can't update task due to conflicts.")
+            return
+        
         self.manager.update_task(id, start_time, end_time, value)
     
-    def search(self, id: int):
+    def search(self, args: list):
+
+        if len(args) != 1 :
+            print(">>> [ERROR]:  Invalid arguments for InsertTask.")
+            return
+
+        try:
+            id = int(args[0])
+        except (ValueError):
+            print(">>> [ERROR]: Invalid arguments for InsertTask.(Arguments are not integer)")
+            return
+        
         task : Task = self.manager.get_task_id(id)
         if task:
             print(f"Task info ->  time: ({task.start_time}, {task.end_time}), id:{task.id}, value: {task.value}")
