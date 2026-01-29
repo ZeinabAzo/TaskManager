@@ -22,6 +22,8 @@ class BTree:
         if node is None:
             node = self.root
 
+            
+
         i = 0
         while i < len(node.keys) and k > node.keys[i]:
             i += 1
