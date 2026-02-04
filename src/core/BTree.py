@@ -237,6 +237,45 @@ class BTree:
         x.children.pop(i+1)
 
     # ==========================
+    # RANGE SEARCH
+    # ==========================
+    def search_range(self, start_id: int, end_id: int) -> List[Task]:
+        """Returns all Tasks with IDs in the inclusive range [start_id, end_id]."""
+        if start_id > end_id:
+            start_id, end_id = end_id, start_id
+
+        result: List[Task] = []
+        self._search_range(self.root, start_id, end_id, result)
+        return result
+
+    def _search_range(self, node: BTreeNode, start_id: int, end_id: int, result: List[Task]):
+        if not node or not node.keys:
+            return
+
+        i = 0
+        while i < len(node.keys):
+            key = node.keys[i]
+
+            # Explore left child if it can contain keys within range.
+            if not node.leaf and start_id <= key:
+                self._search_range(node.children[i], start_id, end_id, result)
+
+            # Add current key if within range.
+            if start_id <= key <= end_id:
+                result.append(node.values[i])
+
+            # If current key exceeds end_id, no need to continue.
+            if key > end_id:
+                return
+
+            i += 1
+
+        # Explore rightmost child if range can extend beyond last key.
+        if not node.leaf and end_id >= node.keys[-1]:
+            self._search_range(node.children[i], start_id, end_id, result)
+
+
+    # ==========================
     # PRINT (Traversal)
     # ==========================
     def traverse(self, node=None, level=0):

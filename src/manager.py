@@ -39,6 +39,8 @@ class TaskManager:
         self.remove_task(id)
         self.add_task(id, start, end, val)
 
+    def get_task_id_range(self, start_id: int, end_id: int):
+        return self._Btree.search_range(start_id, end_id)
 
     def display_all(self):
         print("\n--- ⁂ Current Task Hierarchy (B-Tree) ⁂ ---")
