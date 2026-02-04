@@ -88,7 +88,7 @@ class Controller:
         
         try:
             start_time = int(args[0])
-            end_time = int(args[2])
+            end_time = int(args[1])
         except (ValueError):
             print(">>> [ERROR]: Invalid arguments for InsertTask.(Arguments are not integer)")
             return
