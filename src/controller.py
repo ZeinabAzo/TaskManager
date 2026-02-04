@@ -8,6 +8,7 @@ class Controller:
             "DeleteTask" : self.delete_task,
             "UpdateTask": self.update_task,
             "QueryTaskId": self.search,
+            "QueryTaskSum": self.sum,
         }
 
     def add_task(self, args : list):
@@ -80,7 +81,22 @@ class Controller:
 
         return
         
-    
+    def sum(self, args: list):
+        if len(args) != 2 :
+            print(">>> [ERROR]:  Invalid arguments for InsertTask.")
+            return
+        
+        try:
+            start_time = int(args[0])
+            end_time = int(args[2])
+        except (ValueError):
+            print(">>> [ERROR]: Invalid arguments for InsertTask.(Arguments are not integer)")
+            return
+        
+        tasks = self.manager.get_task_id_range(start_time, end_time)
+        total = sum(task.value for task in tasks)
+        print(f"Sum of values in range [{start_time}, {end_time}]: {total}")
+
     def dispatch(self, cmd: str, args: list) -> None:
         if cmd not in self.commands:
             print(">>> [ERROR]: Command not found.")
