@@ -62,7 +62,7 @@ class IntervalTree:
 
         # Check for overlap: 
         # (Node.low <= Query.end) AND (Node.high >= Query.start)
-        if node.low <= end and node.high >= start:
+        if node.low < end and node.high > start:
             result.append(node.task)
 
         # Optimization: Only go left if the left child's max is >= start
