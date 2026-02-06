@@ -131,3 +131,34 @@ class IntervalTree:
         if node.right and node.right.max > node.max:
             node.max = node.right.max
 
+
+    # PRINT
+    
+    def print_tree(self):
+        """Pretty-prints the Interval Tree structure."""
+        if not self.root:
+            print("(empty Interval Tree)")
+            return
+        self._print_node(self.root, "", True)
+
+    def _print_node(self, node: Optional[IntervalNode], prefix: str, is_last: bool):
+        if not node:
+            return
+
+        connector = "└── " if is_last else "├── "
+        print(
+            f"{prefix}{connector}"
+            f"id={node.task.id}, interval=[{node.low}, {node.high}], max={node.max}, value={node.task.value}"
+        )
+
+        children: List[IntervalNode] = []
+        if node.left:
+            children.append(node.left)
+        if node.right:
+            children.append(node.right)
+
+        child_prefix = prefix + ("    " if is_last else "│   ")
+        for idx, child in enumerate(children):
+            self._print_node(child, child_prefix, idx == len(children) - 1)
+
+

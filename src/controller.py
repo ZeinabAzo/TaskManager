@@ -9,6 +9,7 @@ class Controller:
             "UpdateTask": self.update_task,
             "QueryTaskId": self.search,
             "QueryTaskSum": self.sum,
+            "PrintTrees": self.print_trees,
         }
 
     def add_task(self, args : list):
@@ -96,6 +97,12 @@ class Controller:
         tasks = self.manager.get_task_id_range(start_time, end_time)
         total = sum(task.value for task in tasks)
         print(f"Sum of values in range [{start_time}, {end_time}]: {total}")
+
+    def print_trees(self, args: list):
+        if len(args) != 0:
+            print(">>> [ERROR]: PrintTrees does not take arguments.")
+            return
+        self.manager.display_all()
 
     def dispatch(self, cmd: str, args: list) -> None:
         if cmd not in self.commands:

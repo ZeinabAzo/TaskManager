@@ -286,3 +286,22 @@ class BTree:
         if not node.leaf:
             for child in node.children:
                 self.traverse(child, level + 1)
+
+    
+    def print_tree(self):
+        """Pretty-prints the B-Tree structure."""
+        if not self.root or not self.root.keys:
+            print("(empty B-Tree)")
+            return
+        self._print_node(self.root, "", True)
+
+    def _print_node(self, node: BTreeNode, prefix: str, is_last: bool):
+        connector = "└── " if is_last else "├── "
+        print(f"{prefix}{connector}keys={node.keys}")
+
+        if node.leaf:
+            return
+
+        child_prefix = prefix + ("    " if is_last else "│   ")
+        for idx, child in enumerate(node.children):
+            self._print_node(child, child_prefix, idx == len(node.children) - 1)

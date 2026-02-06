@@ -43,5 +43,8 @@ class TaskManager:
         return self._Btree.search_range(start_id, end_id)
 
     def display_all(self):
-        print("\n--- ⁂ Current Task Hierarchy (B-Tree) ⁂ ---")
-        self._tree.traverse()
+        print("\n--- ⁂ Current Task Hierarchy (B-Tree by Task ID) ⁂ ---")
+        self._Btree.print_tree()
+
+        print("\n--- ⁂ Current Interval Index (Interval Tree by Time) ⁂ ---")
+        self.interval.print_tree()
