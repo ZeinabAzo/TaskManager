@@ -139,6 +139,7 @@ class IntervalTree:
         if not self.root:
             print("(empty Interval Tree)")
             return
+        print("root")
         self._print_node(self.root, "", True)
 
     def _print_node(self, node: Optional[IntervalNode], prefix: str, is_last: bool):
@@ -151,14 +152,20 @@ class IntervalTree:
             f"id={node.task.id}, interval=[{node.low}, {node.high}], max={node.max}, value={node.task.value}"
         )
 
-        children: List[IntervalNode] = []
+        children: List[tuple[str, IntervalNode]] = []
         if node.left:
-            children.append(node.left)
+            children.append(("left", node.left))
         if node.right:
-            children.append(node.right)
+            children.append(("right", node.right))
+
 
         child_prefix = prefix + ("    " if is_last else "│   ")
-        for idx, child in enumerate(children):
-            self._print_node(child, child_prefix, idx == len(children) - 1)
+        for idx, (label, child) in enumerate(children):
+            is_child_last = idx == len(children) - 1
+            branch_connector = "└── " if is_child_last else "├── "
+            print(f"{child_prefix}{branch_connector}{label}")
+            next_prefix = child_prefix + ("    " if is_child_last else "│   ")
+            self._print_node(child, next_prefix, True)
+
 
 

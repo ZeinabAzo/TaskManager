@@ -293,15 +293,29 @@ class BTree:
         if not self.root or not self.root.keys:
             print("(empty B-Tree)")
             return
+        print("root")
         self._print_node(self.root, "", True)
+
+    def _format_node(self, node: BTreeNode) -> str:
+        entries = [
+            f"{task.id}:[{task.start_time},{task.end_time}]={task.value}"
+            for task in node.values
+        ]
+        return "{" + " | ".join(entries) + "}"
+
 
     def _print_node(self, node: BTreeNode, prefix: str, is_last: bool):
         connector = "└── " if is_last else "├── "
-        print(f"{prefix}{connector}keys={node.keys}")
-
+        node_type = "leaf" if node.leaf else "internal"
+        print(f"{prefix}{connector}{node_type} keys={node.keys} {self._format_node(node)}")
         if node.leaf:
             return
 
         child_prefix = prefix + ("    " if is_last else "│   ")
         for idx, child in enumerate(node.children):
             self._print_node(child, child_prefix, idx == len(node.children) - 1)
+            is_child_last = idx == len(node.children) - 1
+            branch_connector = "└── " if is_child_last else "├── "
+            print(f"{child_prefix}{branch_connector}child[{idx}]")
+            next_prefix = child_prefix + ("    " if is_child_last else "│   ")
+            self._print_node(child, next_prefix, True)
